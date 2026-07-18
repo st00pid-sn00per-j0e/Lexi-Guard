@@ -31,7 +31,6 @@ export default function ForgotPasswordPage() {
     setIsLoading(true);
 
     const targetUrl = `${API_URL}/auth/forgot-password`;
-    console.log("🚀 Button clicked! Attempting to fetch:", targetUrl);
 
     try {
       const res = await fetch(targetUrl, {

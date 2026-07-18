@@ -12,14 +12,7 @@ export async function saveSettings(formData: FormData) {
 
   const sessionTimeout = Number.parseInt(sessionTimeoutRaw, 10);
 
-  console.log("Saving settings to database:", {
-    companyName,
-    darkMode,
-    twoFactorAuth,
-    sessionTimeout: Number.isNaN(sessionTimeout) ? 0 : sessionTimeout,
-    aiModel,
-    emailNotifications,
-  });
+
 
   await new Promise((resolve) => setTimeout(resolve, 500));
 

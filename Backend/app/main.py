@@ -10,6 +10,10 @@ from app.routes import auth
 from app.routes.contracts import router as contracts_router
 from app.routes.company import router as company_router
 from app.routes.users import router as users_router
+from app.routes.notifications import router as notifications_router
+
+
+
 
 
 
@@ -84,6 +88,7 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(contracts_router, prefix="/api/contracts", tags=["contracts"])
 app.include_router(company_router, prefix="/api/company", tags=["company"])
 app.include_router(users_router, prefix="/api/users", tags=["users"])
+app.include_router(notifications_router)
 
 
 

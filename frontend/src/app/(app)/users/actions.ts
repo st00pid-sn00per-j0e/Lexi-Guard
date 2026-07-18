@@ -34,7 +34,6 @@ export async function requireCompanyAccount() {
   }
 
   const user = await res.json();
-  console.log("✅ User data returned by backend:", user);
 
   if (user.account_type !== "company") {
     console.error("🚫 Access Denied: User account_type is", user.account_type);

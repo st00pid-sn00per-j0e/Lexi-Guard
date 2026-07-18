@@ -9,5 +9,4 @@ export const API_URL = `${cleanBaseUrl}/api`;
 export const AI_API_BASE_URL = cleanAiUrl;
 export const AI_API_URL = `${cleanAiUrl}/api`;
 
-console.log("✅ API_URL successfully loaded:", API_URL);
 

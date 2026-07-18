@@ -140,7 +140,6 @@ function ClauseAnalysisContent() {
       // ignore
     }
 
-    console.log("[analysis] searchParams", window.location.search);
     if (!contractId) return;
 
 
@@ -173,9 +172,7 @@ function ClauseAnalysisContent() {
           // Still try to extract text below.
         }
 
-        console.log("[analysis] contractId", contractId);
-        console.log("[analysis] contract GET data keys", data ? Object.keys(data) : []);
-        console.log("[analysis] contract GET picked", pickContractText(data));
+
 
         const candidate = pickContractText(data);
         if (candidate) {
