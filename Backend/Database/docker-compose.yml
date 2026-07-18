@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: lexi-guard-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: lexiuser
+      MONGO_INITDB_ROOT_PASSWORD: lexipass123
+      MONGO_INITDB_DATABASE: lexi-guard
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - lexi-guard-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  lexi-guard-network:
+    driver: bridge
+
