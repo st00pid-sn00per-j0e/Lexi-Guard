@@ -15,68 +15,90 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { API_URL } from "@/lib/api";
+import { fetchJsonWithAuth } from "@/lib/api-client";
+import type { User } from "@/lib/auth";
+
+interface SettingsUpdateResponse {
+  message: string;
+  user: User;
+}
 
 export default function SettingsPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [isLoadingSettings, setIsLoadingSettings] = useState(true);
 
   const [settings, setSettings] = useState({
     companyName: "",
     aiModel: "Legal Bert By Nizami",
     twoFactorAuth: false,
+    accountType: "individual",
+    role: "",
   });
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        // Backend currently exposes auth info via /api/auth/me
-        const res = await fetch("/api/auth/me");
-        if (res.ok) {
-          const data = await res.json();
-          setSettings({
-            companyName: data.company_name || "",
-            aiModel: data.ai_model || "Legal Bert By Nizami",
-            twoFactorAuth: Boolean(data.is_2fa_enabled),
-          });
-        }
+        const data = await fetchJsonWithAuth<User>(`${API_URL}/users/me`, {
+          method: "GET",
+        });
+        setSettings({
+          companyName: data.company_name || "",
+          aiModel: data.ai_model || "Legal Bert By Nizami",
+          twoFactorAuth: Boolean(data.is_2fa_enabled),
+          accountType: data.account_type || "individual",
+          role: data.role || "",
+        });
       } catch (err) {
         console.error("Failed to fetch settings", err);
+        toast({
+          title: "Error",
+          description: "Failed to load account settings.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoadingSettings(false);
       }
     };
 
-    fetchSettings();
-  }, []);
+    void fetchSettings();
+  }, [toast]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("company_name", settings.companyName);
-      formData.append("ai_model", settings.aiModel);
-      formData.append("two_factor_auth", String(settings.twoFactorAuth));
-
-      const res = await fetch("/api/users/settings", {
+      const data = await fetchJsonWithAuth<SettingsUpdateResponse>(`${API_URL}/users/settings`, {
         method: "PATCH",
-        body: formData,
+        body: JSON.stringify({
+          company_name: settings.companyName,
+          ai_model: settings.aiModel,
+          two_factor_auth: settings.twoFactorAuth,
+        }),
       });
 
-      if (res.ok) {
-        toast({ title: "Success", description: "Settings updated successfully." });
-      } else {
-        const err = await res.json().catch(() => null);
-        toast({
-          title: "Error",
-          description: err?.detail || "Failed to update settings.",
-          variant: "destructive",
-        });
-      }
-    } catch {
-      toast({ title: "Error", description: "An unexpected error occurred.", variant: "destructive" });
+      setSettings((current) => ({
+        ...current,
+        companyName: data.user.company_name || "",
+        aiModel: data.user.ai_model || current.aiModel,
+        twoFactorAuth: Boolean(data.user.is_2fa_enabled),
+        accountType: data.user.account_type || current.accountType,
+        role: data.user.role || current.role,
+      }));
+      toast({ title: "Success", description: "Settings updated successfully." });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "An unexpected error occurred.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
+
+  const isCompanyAccount = settings.accountType === "company";
 
   return (
     <div className="space-y-6">
@@ -91,8 +113,14 @@ export default function SettingsPage() {
                 id="companyName"
                 value={settings.companyName}
                 onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
-                placeholder="Enter your company name"
+                placeholder={isCompanyAccount ? "Enter your company name" : "No company account"}
+                disabled={isLoadingSettings || !isCompanyAccount}
               />
+              <p className="text-sm text-muted-foreground">
+                {isCompanyAccount
+                  ? `Signed in as ${settings.role || "member"} for ${settings.companyName || "your company"}.`
+                  : "This individual account is not linked to a company workspace."}
+              </p>
             </div>
 
             <div className="space-y-2">
@@ -108,7 +136,7 @@ export default function SettingsPage() {
               </Select>
               <p className="text-sm text-muted-foreground">
                 Currently active:{" "}
-                <span className="font-semibold text-primary">Legal Bert By Nizami</span>
+                <span className="font-semibold text-primary">{settings.aiModel}</span>
               </p>
             </div>
 
@@ -125,7 +153,7 @@ export default function SettingsPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading || isLoadingSettings}>
               {loading ? "Saving..." : "Save Changes"}
             </Button>
           </CardFooter>

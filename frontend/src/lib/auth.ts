@@ -6,7 +6,12 @@ export interface User {
   first_name: string;
   last_name: string;
   account_type: string;
-  company_name?: string;
+  company_name?: string | null;
+  company_id?: string | null;
+  role?: string | null;
+  ai_model?: string;
+  is_2fa_enabled?: boolean;
+  avatar_url?: string | null;
 }
 
 export interface AuthResponse {
@@ -86,9 +91,22 @@ export async function login(data: LoginData): Promise<AuthResponse> {
 }
 
 
+export async function logout(): Promise<void> {
+  const response = await fetch(`${API_URL}/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => null);
+    throw new Error(error?.detail || "Logout failed");
+  }
+}
+
+
 export async function getCurrentUser(): Promise<User> {
   const { fetchJsonWithAuth } = await import("./api-client");
-  return fetchJsonWithAuth<User>(`${API_URL}/auth/me`, { method: "GET" });
+  return fetchJsonWithAuth<User>(`${API_URL}/users/me`, { method: "GET" });
 }
 
 

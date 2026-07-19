@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
+import { API_URL } from "@/lib/api";
+import { fetchJsonWithAuth } from "@/lib/api-client";
 import {
   Card,
   CardContent,
@@ -25,7 +27,6 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-// Define the exact shape of the data coming from your FastAPI backend
 interface Notification {
   id: string;
   type: "High Risk" | "Update" | "Success" | "Info" | string;
@@ -36,11 +37,17 @@ interface Notification {
 }
 
 
+const normalizeType = (value: string) =>
+  value.trim().toLowerCase().replace(/\s+/g, "-");
+
 const formatTimeAgo = (dateString: string) => {
   const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return "Unknown time";
+
   const now = new Date();
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
+  if (seconds < 0) return "Just now";
   if (seconds < 60) return "Just now";
   const minutes = Math.floor(seconds / 60);
   if (minutes < 60) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
@@ -56,6 +63,8 @@ const getIcon = (type: string) => {
       return <AlertTriangle className="h-5 w-5 text-destructive" />;
     case "Success":
       return <CheckCircle className="h-5 w-5 text-green-600" />;
+    case "Update":
+      return <AlertCircle className="h-5 w-5 text-amber-600" />;
     default:
       return <Info className="h-5 w-5 text-blue-500" />;
   }
@@ -73,16 +82,11 @@ export default function NotificationsPage() {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch("/api/notifications", {
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-
-        const data: Notification[] = await response.json();
-        setNotifications(data);
+        const data = await fetchJsonWithAuth<Notification[]>(
+          `${API_URL}/notifications`,
+          { method: "GET" }
+        );
+        setNotifications(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("API Error:", err);
         setError("Unable to load notification history. Please try again later.");
@@ -96,7 +100,7 @@ export default function NotificationsPage() {
 
   const filteredNotifications = notifications.filter((n) => {
     if (filter === "all") return true;
-    return n.type.toLowerCase().replace(" ", "-") === filter;
+    return normalizeType(n.type) === filter;
   });
 
   return (
@@ -114,7 +118,7 @@ export default function NotificationsPage() {
             {/* 4. Working Filter Dropdown */}
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">Filter by: </span>
-              <Select defaultValue="all" onValueChange={setFilter}>
+              <Select value={filter} onValueChange={setFilter}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="All Types" />
                 </SelectTrigger>

@@ -17,6 +17,7 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/translation") ||
     request.nextUrl.pathname.startsWith("/voice") ||
     request.nextUrl.pathname.startsWith("/users") ||
+    request.nextUrl.pathname.startsWith("/profile") ||
     request.nextUrl.pathname.startsWith("/settings") ||
     request.nextUrl.pathname.startsWith("/notifications") ||
     request.nextUrl.pathname.startsWith("/risk");
@@ -41,6 +42,7 @@ export const config = {
     "/translation/:path*",
     "/voice/:path*",
     "/users/:path*",
+    "/profile/:path*",
     "/settings/:path*",
     "/notifications/:path*",
     "/risk/:path*",

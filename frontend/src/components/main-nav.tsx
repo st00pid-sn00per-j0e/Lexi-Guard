@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -16,12 +16,11 @@ import {
   LogOut,
   Mic,
   ScanText,
-  Settings,
   Shield,
   Users,
 } from "lucide-react";
 
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, logout, removeToken } from "@/lib/auth";
 import { useEffect, useState } from "react";
 
 
@@ -39,7 +38,9 @@ const navItems = [
 
 export function MainNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isCompany, setIsCompany] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -64,6 +65,21 @@ export function MainNav() {
     return true;
   });
 
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to revoke session:", error);
+    } finally {
+      removeToken();
+      router.replace("/login");
+      router.refresh();
+    }
+  };
+
 
   return (
     <SidebarMenu>
@@ -81,12 +97,14 @@ export function MainNav() {
         </SidebarMenuItem>
       ))}
       <SidebarMenuItem className="mt-auto">
-        <Link href="/login">
-            <SidebarMenuButton>
-                <LogOut />
-                <span>Logout</span>
-            </SidebarMenuButton>
-        </Link>
+        <SidebarMenuButton
+          type="button"
+          disabled={isLoggingOut}
+          onClick={() => void handleLogout()}
+        >
+          <LogOut />
+          <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+        </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
   );
