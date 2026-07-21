@@ -1,3 +1,45 @@
+// import { Logo } from "@/components/logo";
+// import { MainNav } from "@/components/main-nav";
+// import {
+//   SidebarProvider,
+//   Sidebar,
+//   SidebarHeader,
+//   SidebarContent,
+//   SidebarInset,
+//   SidebarTrigger,
+// } from "@/components/ui/sidebar";
+// import { UserNav } from "@/components/user-nav";
+// import { StaggerAnimation } from "@/components/stagger-animation";
+
+// export default function AppLayout({ children }: { children: React.ReactNode }) {
+//   return (
+//     <SidebarProvider>
+//       <Sidebar collapsible="icon">
+//         <SidebarHeader>
+//           <Logo />
+//         </SidebarHeader>
+//         <SidebarContent>
+//           <MainNav />
+//         </SidebarContent>
+//       </Sidebar>
+//       <SidebarInset>
+//         <div className="absolute inset-0 -z-10 h-full w-full bg-background">
+//           <div className="hidden bg-muted lg:flex items-center justify-center relative overflow-hidden h-full">
+//             <StaggerAnimation />
+//           </div>
+//         </div>
+//         <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/60 px-4 backdrop-blur-md sm:h-16 sm:px-6">
+//           <SidebarTrigger className="md:hidden" />
+//           <div className="flex-1" />
+//           <UserNav />
+//         </header>
+//         <main className="flex-1 p-4 sm:p-6 bg-background/40">{children}</main>
+//       </SidebarInset>
+//     </SidebarProvider>
+//   );
+// }
+
+
 import { Logo } from "@/components/logo";
 import { MainNav } from "@/components/main-nav";
 import {
@@ -14,7 +56,8 @@ import { StaggerAnimation } from "@/components/stagger-animation";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <Sidebar collapsible="icon">
+      {/* Sidebar with glass effect and refined border */}
+      <Sidebar collapsible="icon" className="border-r border-border/50 bg-background/80 backdrop-blur-md">
         <SidebarHeader>
           <Logo />
         </SidebarHeader>
@@ -22,18 +65,28 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <MainNav />
         </SidebarContent>
       </Sidebar>
-      <SidebarInset>
-        <div className="absolute inset-0 -z-10 h-full w-full bg-background">
-          <div className="hidden bg-muted lg:flex items-center justify-center relative overflow-hidden h-full">
+
+      <SidebarInset className="relative bg-gradient-to-br from-background via-background to-muted/20">
+        {/* Animated background blobs + StaggerAnimation */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-accent/5 blur-3xl" />
+          <div className="hidden lg:block">
             <StaggerAnimation />
           </div>
         </div>
-        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/60 px-4 backdrop-blur-md sm:h-16 sm:px-6">
+
+        {/* Header with glass effect and subtle shadow */}
+        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b border-border/50 bg-background/70 px-4 backdrop-blur-xl shadow-sm sm:h-16 sm:px-6">
           <SidebarTrigger className="md:hidden" />
           <div className="flex-1" />
           <UserNav />
         </header>
-        <main className="flex-1 p-4 sm:p-6 bg-background/40">{children}</main>
+
+        {/* Main content with fade-in animation */}
+        <main className="relative flex-1 p-4 sm:p-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {children}
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );
