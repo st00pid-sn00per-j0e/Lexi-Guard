@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     # NOTE: set EMAIL_FROM in .env to match your SMTP_USER
     EMAIL_FROM: str = "LexiGuard <onboarding@resend.dev>"
 
+    # URLs
+    FRONTEND_URL: str = "http://localhost:9002"
+    BACKEND_URL: str = "http://localhost:8001"
+
 
 
     # OTP / 2FA

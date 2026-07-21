@@ -143,8 +143,7 @@ export function SphereAnimation() {
           duration: 30000,
           easing: 'easeOutQuint',
           autoplay: false,
-        },
-        0
+        }
       );
 
       function init() {
