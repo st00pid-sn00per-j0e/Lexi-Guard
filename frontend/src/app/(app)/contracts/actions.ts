@@ -203,35 +203,6 @@ export async function downloadContractReport(
   URL.revokeObjectURL(url);
 }
 
-export async function downloadOriginalContract(
-  contractId: string,
-  filename: string = "original-contract.pdf"
-): Promise<void> {
-  const response = await fetchWithAuth(
-    `${API_URL}/contracts/${contractId}/download`,
-    { method: "GET" }
-  );
-
-  if (!response.ok) {
-    const error = await response
-      .json()
-      .catch(() => ({ detail: response.statusText }));
-    throw new Error(
-      error.detail || `Failed to download original: ${response.statusText}`
-    );
-  }
-
-  const blob = await response.blob();
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = filename;
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  URL.revokeObjectURL(url);
-}
-
 export async function processPDF(file: File): Promise<PDFProcessResult> {
   const formData = new FormData();
   formData.append("file", file);

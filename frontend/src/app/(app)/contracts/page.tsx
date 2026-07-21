@@ -46,13 +46,11 @@ import {
   MoreHorizontal,
   Eye,
   Languages,
-  FileDown,
 } from "lucide-react";
 import {
   uploadContract,
   deleteContract,
   downloadContractReport,
-  downloadOriginalContract,
   pollContractAnalysis,
   type ContractAnalysisStatus,
 } from "./actions";
@@ -276,19 +274,6 @@ export default function ContractsPage() {
     }
   };
 
-  const handleDownloadOriginal = async (contract: any) => {
-    try {
-      await downloadOriginalContract(contract.id, contract.name || "original-contract.pdf");
-      toast({ title: "Success", description: "Original file download started." });
-    } catch (error: any) {
-      toast({
-        title: "Download Failed",
-        description: error?.message || "Could not download original file.",
-        variant: "destructive",
-      });
-    }
-  };
-
   const isCompanyMember = currentUser?.account_type === "company";
   const canUploadToCompany = currentUser?.role === "admin";
   const isUploadDisabled = isCompanyMember && activeTab === "company" && !canUploadToCompany;
@@ -382,7 +367,6 @@ export default function ContractsPage() {
               onAnalyze={handleAnalyze}
               onTranslate={handleTranslate}
               onDownloadReport={handleDownloadReport}
-              onDownloadOriginal={handleDownloadOriginal}
               scope="personal"
             />
           </TabsContent>
@@ -394,7 +378,6 @@ export default function ContractsPage() {
               onAnalyze={handleAnalyze}
               onTranslate={handleTranslate}
               onDownloadReport={handleDownloadReport}
-              onDownloadOriginal={handleDownloadOriginal}
               scope="company"
             />
           </TabsContent>
@@ -407,7 +390,6 @@ export default function ContractsPage() {
           onAnalyze={handleAnalyze}
           onTranslate={handleTranslate}
           onDownloadReport={handleDownloadReport}
-          onDownloadOriginal={handleDownloadOriginal}
           scope="personal"
         />
       )}
@@ -539,7 +521,6 @@ function ContractTable({
   onAnalyze,
   onTranslate,
   onDownloadReport,
-  onDownloadOriginal,
   scope,
 }: {
   contracts: any[];
@@ -548,7 +529,6 @@ function ContractTable({
   onAnalyze: (contract: any) => void;
   onTranslate: (contractId: string) => void;
   onDownloadReport: (contract: any) => void;
-  onDownloadOriginal: (contract: any) => void;
   scope: "personal" | "company";
 }) {
 
@@ -618,10 +598,6 @@ function ContractTable({
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => onDownloadReport(contract)}>
                         <FileText className="mr-2 h-4 w-4" /> Download Report
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem onClick={() => onDownloadOriginal(contract)}>
-                        <FileDown className="mr-2 h-4 w-4" /> Download Original
                       </DropdownMenuItem>
 
                       {/* Conditionally render Delete based on RBAC rules */}
