@@ -64,7 +64,7 @@ export default function LandingPage() {
       </div>
 
       {/* ===== HEADER ===== */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-lg">
+      <header className="sticky top-0 z-50 w-full border-b border-black/10 dark:border-white/10 bg-background/80 backdrop-blur-lg">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo className="hover:scale-105 transition-transform" />
           
@@ -169,7 +169,7 @@ export default function LandingPage() {
               <p className="text-muted-foreground mt-2">Interact with the tabs below to explore different viewpoints of the LexiGuard analysis platform.</p>
               
               {/* Tab Selector */}
-              <div className="flex justify-center gap-2 mt-6 bg-card/80 border border-border/40 p-1.5 rounded-full max-w-md mx-auto shadow-sm">
+              <div className="flex justify-center gap-2 mt-6 bg-white/70 dark:bg-card/80 border border-black/10 dark:border-border/40 p-1.5 rounded-full max-w-md mx-auto shadow-sm">
                 <button 
                   onClick={() => setActiveTab("analysis")}
                   className={`px-4 py-2 rounded-full text-xs font-semibold font-headline transition-all cursor-pointer ${activeTab === "analysis" ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground hover:text-foreground"}`}
@@ -192,7 +192,7 @@ export default function LandingPage() {
             </div>
 
             {/* Mock Dashboard UI */}
-            <div className="max-w-5xl mx-auto rounded-xl border border-border/50 bg-card/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 sm:p-8 hover:shadow-primary/5 hover:border-primary/20 transition-all duration-500">
+            <div className="max-w-5xl mx-auto rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-card/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 sm:p-8 hover:shadow-primary/5 hover:border-primary/20 transition-all duration-500">
               
               {/* Header of Mock App */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-border/40 pb-6 gap-4">
@@ -404,7 +404,7 @@ export default function LandingPage() {
               </div>
 
               {/* Right Column: Model Specs visual */}
-              <div className="bg-card/40 border border-border/40 backdrop-blur-md p-6 rounded-xl relative hover:border-accent/40 transition-all duration-300">
+              <div className="bg-white/60 dark:bg-card/40 border border-black/10 dark:border-white/10 backdrop-blur-md p-6 rounded-xl relative hover:border-accent/40 transition-all duration-300">
                 <div className="absolute top-3 right-3 text-xs bg-accent/10 border border-accent/20 px-2 py-0.5 rounded text-accent flex items-center gap-1">
                   <Sparkles className="h-3 w-3 animate-spin-slow" />
                   Active Model
@@ -460,7 +460,7 @@ export default function LandingPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Feature 1 */}
-              <Card className="hover:border-primary/50 transition-all duration-300 bg-card/30 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 group cursor-pointer">
+              <Card className="hover:border-primary/50 transition-all duration-300 bg-white/60 dark:bg-card/30 border-black/10 dark:border-border/40 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 group cursor-pointer">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 border border-primary/20 group-hover:scale-110 transition-transform">
                     <ScanText className="h-6 w-6" />
@@ -476,7 +476,7 @@ export default function LandingPage() {
               </Card>
 
               {/* Feature 2 */}
-              <Card className="hover:border-primary/50 transition-all duration-300 bg-card/30 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-accent/5 group cursor-pointer">
+              <Card className="hover:border-primary/50 transition-all duration-300 bg-white/60 dark:bg-card/30 border-black/10 dark:border-border/40 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-accent/5 group cursor-pointer">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 border border-primary/20 group-hover:scale-110 transition-transform">
                     <Shield className="h-6 w-6" />
@@ -492,7 +492,7 @@ export default function LandingPage() {
               </Card>
 
               {/* Feature 3 */}
-              <Card className="hover:border-primary/50 transition-all duration-300 bg-card/30 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 group cursor-pointer">
+              <Card className="hover:border-primary/50 transition-all duration-300 bg-white/60 dark:bg-card/30 border-black/10 dark:border-border/40 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 group cursor-pointer">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 border border-primary/20 group-hover:scale-110 transition-transform">
                     <Languages className="h-6 w-6" />
@@ -508,7 +508,7 @@ export default function LandingPage() {
               </Card>
 
               {/* Feature 4 */}
-              <Card className="hover:border-primary/50 transition-all duration-300 bg-card/30 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-accent/5 group cursor-pointer">
+              <Card className="hover:border-primary/50 transition-all duration-300 bg-white/60 dark:bg-card/30 border-black/10 dark:border-border/40 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-accent/5 group cursor-pointer">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 border border-primary/20 group-hover:scale-110 transition-transform">
                     <Mic className="h-6 w-6" />
@@ -524,7 +524,7 @@ export default function LandingPage() {
               </Card>
 
               {/* Feature 5 */}
-              <Card className="hover:border-primary/50 transition-all duration-300 bg-card/30 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 group cursor-pointer">
+              <Card className="hover:border-primary/50 transition-all duration-300 bg-white/60 dark:bg-card/30 border-black/10 dark:border-border/40 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 group cursor-pointer">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 border border-primary/20 group-hover:scale-110 transition-transform">
                     <BarChart2 className="h-6 w-6" />
@@ -540,7 +540,7 @@ export default function LandingPage() {
               </Card>
 
               {/* Feature 6 */}
-              <Card className="hover:border-primary/50 transition-all duration-300 bg-card/30 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-accent/5 group cursor-pointer">
+              <Card className="hover:border-primary/50 transition-all duration-300 bg-white/60 dark:bg-card/30 border-black/10 dark:border-border/40 backdrop-blur-md flex flex-col h-full hover:-translate-y-1.5 hover:shadow-lg hover:shadow-accent/5 group cursor-pointer">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 border border-primary/20 group-hover:scale-110 transition-transform">
                     <Users className="h-6 w-6" />
@@ -567,19 +567,19 @@ export default function LandingPage() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-card/40 border border-border/30 p-5 rounded-lg shadow-sm hover:border-primary/30 transition-colors">
+              <div className="bg-white/60 dark:bg-card/40 border border-black/10 dark:border-border/30 p-5 rounded-lg shadow-sm hover:border-primary/30 transition-colors">
                 <h4 className="text-base font-bold font-headline text-foreground">NIZAMI</h4>
                 <p className="text-xs text-muted-foreground mt-1">Lead AI Researcher</p>
                 <p className="text-xs text-primary font-semibold mt-3">SSUET Batch 2026</p>
               </div>
 
-              <div className="bg-card/40 border border-border/30 p-5 rounded-lg shadow-sm hover:border-primary/30 transition-colors">
+              <div className="bg-white/60 dark:bg-card/40 border border-black/10 dark:border-border/30 p-5 rounded-lg shadow-sm hover:border-primary/30 transition-colors">
                 <h4 className="text-base font-bold font-headline text-foreground">AZIZ</h4>
                 <p className="text-xs text-muted-foreground mt-1">Full-Stack Architect</p>
                 <p className="text-xs text-primary font-semibold mt-3">SSUET Batch 2026</p>
               </div>
 
-              <div className="bg-card/40 border border-border/30 p-5 rounded-lg shadow-sm hover:border-primary/30 transition-colors">
+              <div className="bg-white/60 dark:bg-card/40 border border-black/10 dark:border-border/30 p-5 rounded-lg shadow-sm hover:border-primary/30 transition-colors">
                 <h4 className="text-base font-bold font-headline text-foreground">ZOHAIB</h4>
                 <p className="text-xs text-muted-foreground mt-1">Security Engineer</p>
                 <p className="text-xs text-primary font-semibold mt-3">SSUET Batch 2026</p>

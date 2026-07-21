@@ -58,7 +58,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       {/* Sidebar with glass effect and refined border */}
-      <Sidebar collapsible="icon" className="border-r border-border/50 bg-background/80 backdrop-blur-md">
+      <Sidebar collapsible="icon" className="border-r border-black/10 dark:border-white/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur-xl">
         <SidebarHeader>
           <Logo />
         </SidebarHeader>
@@ -67,7 +67,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </SidebarContent>
       </Sidebar>
 
-      <SidebarInset className="relative bg-gradient-to-br from-background via-background to-muted/20">
+      <SidebarInset className="relative bg-gradient-to-br from-background via-background/90 to-muted/20">
         {/* Animated background blobs + StaggerAnimation */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
@@ -78,7 +78,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Header with glass effect and subtle shadow */}
-        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b border-border/50 bg-background/70 px-4 backdrop-blur-xl shadow-sm sm:h-16 sm:px-6">
+        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-slate-950/40 backdrop-blur-xl shadow-sm sm:h-16 sm:px-6">
           <SidebarTrigger className="md:hidden" />
           <div className="flex-1" />
           <ThemeToggle />

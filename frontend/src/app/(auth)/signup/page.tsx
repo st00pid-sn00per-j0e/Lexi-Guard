@@ -123,11 +123,13 @@ export default function SignupPage() {
     <>
       <form onSubmit={handleSubmit} className="grid gap-4">
         {error && (
-          <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md">{error}</div>
+          <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-md animate-slide-up">
+            {error}
+          </div>
         )}
 
-        <div className="grid gap-2">
-          <Label>Account Type</Label>
+        <div className="grid gap-2 animate-slide-up delay-75">
+          <Label className="text-foreground/90 font-medium">Account Type</Label>
           <RadioGroup
             value={accountType}
             onValueChange={setAccountType}
@@ -142,7 +144,7 @@ export default function SignupPage() {
               />
               <Label
                 htmlFor="individual"
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                className="flex flex-col items-center justify-between rounded-md border border-black/15 dark:border-white/10 bg-slate-500/5 dark:bg-black/25 p-4 hover:bg-accent/10 hover:text-accent cursor-pointer peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 transition-all [&:has([data-state=checked])]:border-primary"
               >
                 Individual
               </Label>
@@ -151,7 +153,7 @@ export default function SignupPage() {
               <RadioGroupItem value="company" id="company" className="peer sr-only" />
               <Label
                 htmlFor="company"
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                className="flex flex-col items-center justify-between rounded-md border border-black/15 dark:border-white/10 bg-slate-500/5 dark:bg-black/25 p-4 hover:bg-accent/10 hover:text-accent cursor-pointer peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 transition-all [&:has([data-state=checked])]:border-primary"
               >
                 Company
               </Label>
@@ -160,8 +162,8 @@ export default function SignupPage() {
         </div>
 
         {accountType === 'company' && (
-          <div className="grid gap-2">
-            <Label htmlFor="company-name">Company Name</Label>
+          <div className="grid gap-2 animate-slide-up delay-100">
+            <Label htmlFor="company-name" className="text-foreground/90 font-medium">Company Name</Label>
             <Input
               id="company-name"
               placeholder="Your Company LLC"
@@ -169,14 +171,14 @@ export default function SignupPage() {
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               disabled={isLoading || !!inviteToken}
+              className="bg-slate-500/5 dark:bg-black/25 border-black/15 dark:border-white/10 focus:border-primary/60 focus:ring-1 focus:ring-primary/20 backdrop-blur-md transition-all duration-300 hover:border-black/30 dark:hover:border-white/20 text-foreground"
             />
-
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 animate-slide-up delay-150">
           <div className="grid gap-2">
-            <Label htmlFor="first-name">First name</Label>
+            <Label htmlFor="first-name" className="text-foreground/90 font-medium">First name</Label>
             <Input
               id="first-name"
               placeholder="Max"
@@ -184,10 +186,11 @@ export default function SignupPage() {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               disabled={isLoading}
+              className="bg-slate-500/5 dark:bg-black/25 border-black/15 dark:border-white/10 focus:border-primary/60 focus:ring-1 focus:ring-primary/20 backdrop-blur-md transition-all duration-300 hover:border-black/30 dark:hover:border-white/20 text-foreground"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="last-name">Last name</Label>
+            <Label htmlFor="last-name" className="text-foreground/90 font-medium">Last name</Label>
             <Input
               id="last-name"
               placeholder="Robinson"
@@ -195,12 +198,13 @@ export default function SignupPage() {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               disabled={isLoading}
+              className="bg-slate-500/5 dark:bg-black/25 border-black/15 dark:border-white/10 focus:border-primary/60 focus:ring-1 focus:ring-primary/20 backdrop-blur-md transition-all duration-300 hover:border-black/30 dark:hover:border-white/20 text-foreground"
             />
           </div>
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
+        <div className="grid gap-2 animate-slide-up delay-200">
+          <Label htmlFor="email" className="text-foreground/90 font-medium">Email</Label>
           <Input
             id="email"
             type="email"
@@ -209,26 +213,28 @@ export default function SignupPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading || !!inviteToken}
+            className="bg-slate-500/5 dark:bg-black/25 border-black/15 dark:border-white/10 focus:border-primary/60 focus:ring-1 focus:ring-primary/20 backdrop-blur-md transition-all duration-300 hover:border-black/30 dark:hover:border-white/20 text-foreground"
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
+        <div className="grid gap-2 animate-slide-up delay-250">
+          <Label htmlFor="password" className="text-foreground/90 font-medium">Password</Label>
           <Input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={isLoading}
+            className="bg-slate-500/5 dark:bg-black/25 border-black/15 dark:border-white/10 focus:border-primary/60 focus:ring-1 focus:ring-primary/20 backdrop-blur-md transition-all duration-300 hover:border-black/30 dark:hover:border-white/20 text-foreground"
           />
 
           {passwordIsNotEmpty && (
-            <div className="space-y-2">
+            <div className="space-y-2 animate-in fade-in duration-300">
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((index) => (
                   <div
                     key={index}
-                    className={`h-1.5 flex-1 rounded-full transition-all ${
+                    className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
                       index <= passwordStrength.score
                         ? passwordStrength.color
                         : 'bg-gray-200 dark:bg-gray-700'
@@ -238,9 +244,9 @@ export default function SignupPage() {
               </div>
               <div className="flex justify-between items-center">
                 <p
-                  className={`text-xs font-medium capitalize ${
+                  className={`text-xs font-semibold capitalize ${
                     passwordStrength.label === 'weak'
-                      ? 'text-red-500'
+                      ? 'text-red-500 animate-pulse'
                       : passwordStrength.label === 'medium'
                         ? 'text-yellow-500'
                         : 'text-green-500'
@@ -249,45 +255,46 @@ export default function SignupPage() {
                   {passwordStrength.label} Password
                 </p>
                 {!isStrongPassword && passwordStrength.tips.length > 0 && (
-                  <p className="text-xs text-muted-foreground">{passwordStrength.tips[0]}</p>
+                  <p className="text-[10px] text-muted-foreground">{passwordStrength.tips[0]}</p>
                 )}
               </div>
             </div>
           )}
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="confirm-password">Confirm Password</Label>
+        <div className="grid gap-2 animate-slide-up delay-300">
+          <Label htmlFor="confirm-password" className="text-foreground/90 font-medium">Confirm Password</Label>
           <Input
             id="confirm-password"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             disabled={isLoading}
+            className="bg-slate-500/5 dark:bg-black/25 border-black/15 dark:border-white/10 focus:border-primary/60 focus:ring-1 focus:ring-primary/20 backdrop-blur-md transition-all duration-300 hover:border-black/30 dark:hover:border-white/20 text-foreground"
           />
         </div>
 
         {passwordIsNotEmpty && !passwordsMatch && (
-          <Alert variant="destructive" className="p-2 bg-destructive/10">
+          <Alert variant="destructive" className="p-2 bg-destructive/10 border-destructive/20 animate-in fade-in">
             <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription className="text-xs">Passwords do not match.</AlertDescription>
+              <AlertTriangle className="h-4 w-4 text-destructive" />
+              <AlertDescription className="text-xs text-destructive">Passwords do not match.</AlertDescription>
             </div>
           </Alert>
         )}
 
         <Button
           type="submit"
-          className="w-full font-bold"
+          className="w-full font-bold bg-primary hover:bg-primary/95 text-primary-foreground shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-2 animate-slide-up delay-350"
           disabled={!canSubmit || isLoading}
         >
           {isLoading ? 'Creating account...' : 'Create an account'}
         </Button>
       </form>
 
-      <div className="mt-4 text-center text-sm">
+      <div className="mt-4 text-center text-sm text-muted-foreground animate-slide-up delay-400">
         Already have an account?{' '}
-        <Link href="/login" className="underline">
+        <Link href="/login" className="underline text-primary hover:text-primary/90 font-semibold transition-colors">
           Log in
         </Link>
       </div>
