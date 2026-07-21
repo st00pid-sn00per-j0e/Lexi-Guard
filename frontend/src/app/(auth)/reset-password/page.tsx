@@ -28,6 +28,7 @@ export default function ResetPasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const passwordStrength = checkPasswordStrength(newPassword);
   const isStrong = passwordStrength.label === "strong";
@@ -52,8 +53,10 @@ export default function ResetPasswordPage() {
         throw new Error(data?.detail || "Failed to reset password");
       }
 
-      alert("Password reset successfully! Please login.");
-      router.push("/login");
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/login");
+      }, 2500);
     } catch (err: any) {
       console.error("❌ Reset password error:", err);
       setError(err.message || getErrorMessage(err));
@@ -74,6 +77,12 @@ export default function ResetPasswordPage() {
       {error && (
         <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md border border-red-200">
           {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="p-3 text-sm text-green-600 bg-green-50 rounded-md border border-green-200">
+          Password reset successfully! Redirecting to login...
         </div>
       )}
 
@@ -142,9 +151,9 @@ export default function ResetPasswordPage() {
       <Button
         type="submit"
         className="w-full font-bold"
-        disabled={!canSubmit || isLoading}
+        disabled={!canSubmit || isLoading || success}
       >
-        {isLoading ? "Resetting..." : "Reset Password"}
+        {isLoading ? "Resetting..." : success ? "Password Reset!" : "Reset Password"}
       </Button>
     </form>
   );

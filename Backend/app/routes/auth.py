@@ -258,6 +258,49 @@ async def check_verification(request: Request, email: str = Query(...)):
     return JSONResponse(status_code=200, content={"is_verified": bool(user.get("is_verified", False))})
 
 
+@router.post("/resend-verification")
+async def resend_verification(request: Request, db=Depends(get_db)):
+    body = await request.json()
+    email = body.get("email", "")
+    if not email:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is required.")
+
+    user = await db.users.find_one({"email": email})
+    if not user:
+        # Don't reveal whether the email exists
+        return {"message": "If an unverified account exists, a new verification email has been sent."}
+    if user.get("is_verified"):
+        return {"message": "This account is already verified. Please log in."}
+
+    # Generate a fresh verification token
+    verification_token = secrets.token_urlsafe(32)
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$set": {"verification_token": verification_token}},
+    )
+
+    frontend_url = (
+        settings.FRONTEND_URL
+        if getattr(settings, "FRONTEND_URL", None)
+        else os.getenv("FRONTEND_URL", "http://localhost:3000")
+    )
+    backend_url = (
+        settings.BACKEND_URL
+        if getattr(settings, "BACKEND_URL", None)
+        else os.getenv("BACKEND_URL", "http://localhost:8001")
+    )
+
+    yes_url = f"{backend_url}/api/auth/verify-email?token={verification_token}&action=confirm"
+    no_url = f"{backend_url}/api/auth/verify-email?token={verification_token}&action=cancel"
+    user_name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip() or "User"
+
+    ok = send_signup_verification_email(email, user_name, yes_url, no_url)
+    if not ok:
+        print(f"\n⚠️ Resend email failed. Manual verification link: {yes_url}\n")
+
+    return {"message": "If an unverified account exists, a new verification email has been sent."}
+
+
 @router.post("/login", response_model=Token)
 async def login(user_data: UserLogin, request: Request, db=Depends(get_db)):
     user = await db.users.find_one({"email": user_data.email})
